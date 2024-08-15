@@ -8,7 +8,7 @@ cfg.resolver.sourceExts = process.env.RN_SRC_EXT
 
 cfg.transformer.getTransformOptions = async () => ({
   transform: {
-    experimentalImportSupport: true,
+    experimentalImportSupport: false,
     inlineRequires: true,
     nonInlinedRequires: [
       // We can remove this option and rely on the default after
