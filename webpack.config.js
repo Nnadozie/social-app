@@ -30,6 +30,11 @@ module.exports = async function (env, argv) {
   ]
   if (env.mode === 'development') {
     config.plugins.push(new ReactRefreshWebpackPlugin())
+    config.optimization = {
+      ...config.optimization,
+      usedExports: false,
+    }
+    config.mode = 'development'
   }
 
   if (GENERATE_STATS || OPEN_ANALYZER) {
