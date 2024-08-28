@@ -1,12 +1,12 @@
 const createExpoWebpackConfigAsync = require('@expo/webpack-config')
-const {withAlias} = require('@expo/webpack-config/addons')
+const { withAlias } = require('@expo/webpack-config/addons')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
-const {codecovWebpackPlugin} = require('@codecov/webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const { codecovWebpackPlugin } = require('@codecov/webpack-plugin')
 
+const CODECOV_ANALYZER = process.env.EXPO_PUBLIC_CODECOV_ANALYZER === '1'
 const GENERATE_STATS = process.env.EXPO_PUBLIC_GENERATE_STATS === '1'
 const OPEN_ANALYZER = process.env.EXPO_PUBLIC_OPEN_ANALYZER === '1'
-const CODECOV_ANALYZER = process.env.EXPO_PUBLIC_CODECOV_ANALYZER === '1'
 
 const reactNativeWebWebviewConfiguration = {
   test: /postMock.html$/,
@@ -31,6 +31,14 @@ module.exports = async function (env, argv) {
   if (env.mode === 'development') {
     config.plugins.push(new ReactRefreshWebpackPlugin())
   }
+
+  config.optimization = {
+    ...config.optimization,
+    minimize: false,
+    usedExports: true,
+  }
+
+  debugger
 
   if (GENERATE_STATS || OPEN_ANALYZER) {
     config.plugins.push(
